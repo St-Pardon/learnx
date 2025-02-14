@@ -1,5 +1,7 @@
 export interface UserAttributes {
     userid?: string;
+    firstname: string;
+    lastname: string;
     username?: string;
     email: string;
     password: string;
@@ -7,13 +9,11 @@ export interface UserAttributes {
 }
 
 export interface UserInfoAttributes {
-    userinfoid: string;
-    firstname: string;
-    lastname: string;
-    phone: string;
-    address: string;
-    country: string;
-    userid: string;
+    userinfoid?: string;
+    phone?: string;
+    address?: string;
+    country?: string;
+    userid?: string;
 }
 
 export interface IUser {

@@ -43,9 +43,9 @@ passport
                 done: (error: any, user?: IUser | false, info?: any) => void
             ) => {
                 try {
-                    const data = req.body;
+                    const {firstname, lastname, username} = req.body;
 
-                    if (!data.email || !data.password || !data.username) {
+                    if (!email || !password || !username) {
                         return done(null, false, {
                             message: 'missing required fields',
                         });
@@ -60,7 +60,9 @@ passport
                     const user: IUser = await User.create({
                         email,
                         password,
-                        username: data.username,
+                        username: username,
+                        firstname: firstname,
+                        lastname: lastname,
                     });
                     return done(null, user, {
                         message: 'User created successfully',

@@ -20,8 +20,6 @@ class AuthController {
             'signup',
             async (err: any, user: any, msg: any) => {
                 if (err) {
-                    console.log(user);
-                    console.log(msg);
                     res.status(400).json({
                         message: 'An Error occurred',
                         reason: msg.message,
@@ -70,7 +68,7 @@ class AuthController {
                     req.login(user, { session: false }, async (error) => {
                         if (error) return next(error);
 
-                        const body = { _id: user._id, email: user.email };
+                        const body = { userid: user.userid, email: user.email };
                         const token = jwt.sign({ user: body }, JWT_SECRET);
                         res.status(200).json({
                             message: 'Login successful',

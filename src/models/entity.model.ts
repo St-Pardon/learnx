@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 
 class User extends Model<UserAttributes> implements UserAttributes {
     public userid!: string;
+    public firstname!: string;
+    public lastname!: string;
     public username!: string;
     public email!: string;
     public password!: string;
@@ -16,6 +18,14 @@ class User extends Model<UserAttributes> implements UserAttributes {
                     type: DataTypes.UUID,
                     defaultValue: DataTypes.UUIDV4,
                     primaryKey: true,
+                },
+                firstname: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                },
+                lastname: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
                 },
                 username: {
                     type: DataTypes.STRING,
@@ -62,8 +72,6 @@ class User extends Model<UserAttributes> implements UserAttributes {
 
 class UserInfo extends Model<UserInfoAttributes> implements UserInfoAttributes {
     public userinfoid!: string;
-    public firstname!: string;
-    public lastname!: string;
     public phone!: string;
     public address!: string;
     public country!: string;
@@ -76,14 +84,6 @@ class UserInfo extends Model<UserInfoAttributes> implements UserInfoAttributes {
                     type: DataTypes.UUID,
                     defaultValue: DataTypes.UUIDV4,
                     primaryKey: true,
-                },
-                firstname: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
-                lastname: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
                 },
                 phone: {
                     type: DataTypes.STRING,
