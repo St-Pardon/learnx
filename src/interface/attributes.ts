@@ -5,6 +5,7 @@ export interface UserAttributes {
     username?: string;
     email: string;
     password: string;
+    role?: "Learner" | "Instructor" | "Admin";
     isVerified?: boolean;
     isActive?: boolean;
     userinfo?: UserInfoAttributes;

@@ -8,6 +8,7 @@ class User extends Model<UserAttributes> implements UserAttributes {
     public lastname!: string;
     public username!: string;
     public email!: string;
+    public role!: 'Learner' | 'Instructor' | 'Admin';
     public password!: string;
     public isVerified!: boolean;
     public isActive!: boolean;
@@ -39,6 +40,11 @@ class User extends Model<UserAttributes> implements UserAttributes {
                     type: DataTypes.STRING,
                     allowNull: false,
                     unique: true,
+                },
+                role:{
+                    type: DataTypes.ENUM('Learner', 'Instructor', 'Admin'),
+                    defaultValue: 'Learner',
+                    allowNull: false,
                 },
                 password: {
                     type: DataTypes.STRING,
