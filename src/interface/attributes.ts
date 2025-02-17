@@ -6,6 +6,8 @@ export interface UserAttributes {
     email: string;
     password: string;
     isVerified?: boolean;
+    isActive?: boolean;
+    userinfo?: UserInfoAttributes;
 }
 
 export interface UserInfoAttributes {

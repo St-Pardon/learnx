@@ -10,6 +10,9 @@ class User extends Model<UserAttributes> implements UserAttributes {
     public email!: string;
     public password!: string;
     public isVerified!: boolean;
+    public isActive!: boolean;
+
+    public userinfo?: UserInfo;
 
     public static initialize(sequelize: Sequelize) {
         User.init(
@@ -44,6 +47,10 @@ class User extends Model<UserAttributes> implements UserAttributes {
                 isVerified: {
                     type: DataTypes.BOOLEAN,
                     defaultValue: false,
+                },
+                isActive: {
+                    type: DataTypes.BOOLEAN,
+                    defaultValue: true,
                 },
             },
             {
