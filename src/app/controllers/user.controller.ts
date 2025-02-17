@@ -1,6 +1,4 @@
 import { Response, Request } from 'express';
-// import { IUser } from "../../interface/attributes";
-import { db } from '../../models/index.model';
 import { User, UserInfo } from '../../models/entity.model';
 import { UserAttributes, UserInfoAttributes } from '../../interface/attributes';
 
@@ -17,7 +15,7 @@ export class UserController {
     ): Promise<void> {
         try {
             const { id } = req.params;
-            const userid = id ? id : req.user.userid; // get user id from params or token
+            const user_id = id ? id : req.user.userid; // get user id from params or token
 
             const { phone, address, country, firstname, lastname } = req.body;
             const userInfo = {} as UserInfoAttributes;
@@ -26,7 +24,7 @@ export class UserController {
             if (phone) userInfo['phone'] = phone;
             if (address) userInfo['address'] = address;
             if (country) userInfo['country'] = country;
-            userInfo['userid'] = userid;
+            userInfo['user_id'] = user_id;
 
             if (firstname) user['firstname'] = firstname;
             if (lastname) user['lastname'] = lastname;
@@ -36,8 +34,8 @@ export class UserController {
             // const updatedUserInfo = data[1][0];
             // const updatedUser = userData[1][0];
 
-            await UserInfo.update(userInfo, { where: { userid } });
-            await User.update(user, { where: { userid } });
+            await UserInfo.update(userInfo, { where: { user_id } });
+            await User.update(user, { where: { user_id } });
 
             res.status(201).json({ message: 'User updated successfully' });
         } catch (error: any) {
@@ -61,11 +59,11 @@ export class UserController {
     ): Promise<void> {
         try {
             const { id } = req.params;
-            const userid = id ? id : req.user.userid; // get user id from params or token
+            const user_id = id ? id : req.user.userid; // get user id from params or token
             let data;
 
             const userData = await User.findOne({
-                where: { userid },
+                where: { user_id },
                 attributes: { exclude: ['password'] },
                 include: [
                     {
@@ -115,10 +113,10 @@ export class UserController {
     ): Promise<void> {
         try {
             const { id } = req.params;
-            const userid = id ? id : req.user.userid; // get user id from params or token
+            const user_id = id ? id : req.user.userid; // get user id from params or token
 
-            await UserInfo.destroy({ where: { userid } });
-            await User.destroy({ where: { userid } });
+            await UserInfo.destroy({ where: { user_id } });
+            await User.destroy({ where: { user_id } });
 
             res.status(200).send({
                 message: 'User deleted successfully!',
@@ -178,9 +176,9 @@ export class UserController {
     ): Promise<void> {
         try {
             const { id } = req.params;
-            const userid = id ? id : req.user.userid; // get user id from params or token
+            const user_id = id ? id : req.user.userid; // get user id from params or token
 
-            await User.update({ isActive: false }, { where: { userid } });
+            await User.update({ isActive: false }, { where: { user_id } });
 
             res.status(200).send({
                 message: 'User deactivated successfully!',

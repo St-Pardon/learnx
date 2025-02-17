@@ -3,7 +3,7 @@ import { UserAttributes, UserInfoAttributes } from '../interface/attributes';
 import bcrypt from 'bcrypt';
 
 class User extends Model<UserAttributes> implements UserAttributes {
-    public userid!: string;
+    public user_id!: string;
     public firstname!: string;
     public lastname!: string;
     public username!: string;
@@ -18,7 +18,7 @@ class User extends Model<UserAttributes> implements UserAttributes {
     public static initialize(sequelize: Sequelize) {
         User.init(
             {
-                userid: {
+                user_id: {
                     type: DataTypes.UUID,
                     defaultValue: DataTypes.UUIDV4,
                     primaryKey: true,
@@ -75,7 +75,7 @@ class User extends Model<UserAttributes> implements UserAttributes {
     }
 
     public static associate(models: any) {
-        User.hasOne(models.UserInfo, { foreignKey: 'userid', as: 'userinfo' });
+        User.hasOne(models.UserInfo, { foreignKey: 'user_id', as: 'userinfo' });
     }
 
     public async comparePassword(password: string) {
@@ -84,16 +84,16 @@ class User extends Model<UserAttributes> implements UserAttributes {
 }
 
 class UserInfo extends Model<UserInfoAttributes> implements UserInfoAttributes {
-    public userinfoid!: string;
+    public info_id!: string;
     public phone!: string;
     public address!: string;
     public country!: string;
-    public userid!: string;
+    public user_id!: string;
 
     public static initialize(sequelize: Sequelize) {
         UserInfo.init(
             {
-                userinfoid: {
+                info_id: {
                     type: DataTypes.UUID,
                     defaultValue: DataTypes.UUIDV4,
                     primaryKey: true,
@@ -110,7 +110,7 @@ class UserInfo extends Model<UserInfoAttributes> implements UserInfoAttributes {
                     type: DataTypes.STRING,
                     allowNull: true,
                 },
-                userid: {
+                user_id: {
                     type: DataTypes.UUID,
                     allowNull: false,
                 },
@@ -124,7 +124,7 @@ class UserInfo extends Model<UserInfoAttributes> implements UserInfoAttributes {
         return UserInfo;
     }
     public static associate(models: any) {
-        UserInfo.belongsTo(models.User, { foreignKey: 'userid', as: 'user' });
+        UserInfo.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     }
 }
 

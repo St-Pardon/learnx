@@ -1,5 +1,5 @@
 export interface UserAttributes {
-    userid?: string;
+    user_id?: string;
     firstname: string;
     lastname: string;
     username?: string;
@@ -12,11 +12,11 @@ export interface UserAttributes {
 }
 
 export interface UserInfoAttributes {
-    userinfoid?: string;
+    info_id?: string;
     phone?: string;
     address?: string;
     country?: string;
-    userid?: string;
+    user_id?: string;
 }
 
 export interface IUser {
@@ -31,4 +31,13 @@ export interface IToken {
 
 export interface ITokenPayload {
     user: IUser;
+}
+
+
+export interface LessonAttributes {
+    course_id: string;
+    title: string;
+    description: string;
+    category: "Data" | "Engineering" | "Design" | "Business" | "Other";
+    level?: "Beginner" | "Intermediate" | "Advanced";
 }

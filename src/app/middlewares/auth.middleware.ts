@@ -71,9 +71,9 @@ passport
                         lastname: lastname,
                     });
 
-                    const userId = user.userid;
+                    const userId = user.user_id;
                     await UserInfo.create({ // create user info
-                        userid: userId,
+                        user_id: userId,
                     });
 
                     return done(null, user, {
