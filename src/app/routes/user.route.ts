@@ -4,10 +4,30 @@ import passport from 'passport';
 
 const UserRoute = Router();
 
-UserRoute.put(
-    '/update',
+UserRoute.get(
+    '/all',
     passport.authenticate('jwt', { session: false }),
-    UserController.update
-);
+    UserController.getAll
+)
+    .get(
+        '/:id?',
+        passport.authenticate('jwt', { session: false }),
+        UserController.get
+    )
+    .put(
+        '/:id?',
+        passport.authenticate('jwt', { session: false }),
+        UserController.update
+    )
+    .delete(
+        '/:id?',
+        passport.authenticate('jwt', { session: false }),
+        UserController.delete
+    )
+    .patch(
+        '/deactivate/:id?',
+        passport.authenticate('jwt', { session: false }),
+        UserController.deactivate
+    );
 
 export default UserRoute;

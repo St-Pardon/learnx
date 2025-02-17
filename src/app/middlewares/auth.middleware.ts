@@ -1,9 +1,10 @@
 import passport from 'passport';
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as localStategy } from 'passport-local';
-import { User } from '../../models/entity.model';
-import { ITokenPayload, IUser } from '../../interface/attributes';
+import { User, UserInfo } from '../../models/entity.model';
+import { ITokenPayload, IUser, UserAttributes } from '../../interface/attributes';
 import { JWT_SECRET } from '../../config/env.config';
+import { Op } from 'sequelize';
 
 passport
     .use(
@@ -50,20 +51,31 @@ passport
                             message: 'missing required fields',
                         });
                     }
-                    const checkUser = await User.findOne({ where: { email } });
+                    const checkUser = await User.findOne({
+                        where: {
+                            [Op.or]: [{ email }, { username }]
+                        }
+                    }); // check if user already exists
+
                     if (checkUser) {
                         return done(null, false, {
                             message: 'user already exists',
                         });
                     }
 
-                    const user: IUser = await User.create({
+                    const user: UserAttributes = await User.create({
                         email,
                         password,
                         username: username,
                         firstname: firstname,
                         lastname: lastname,
                     });
+
+                    const userId = user.userid;
+                    await UserInfo.create({ // create user info
+                        userid: userId,
+                    });
+
                     return done(null, user, {
                         message: 'User created successfully',
                     });
