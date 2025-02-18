@@ -34,10 +34,27 @@ export interface ITokenPayload {
 }
 
 
+export interface CourseAttributes {
+    course_id?: string;
+    title: string;
+    description?: string;
+    category: "Data" | "Engineering" | "Design" | "Business" | "Other";
+    level?: "Beginner" | "Intermediate" | "Advanced";
+}
+
 export interface LessonAttributes {
+    lesson_id: string;
+    module_id: string;
+    title: string;
+    content: string;
+    video_url?: string;
+    order: number;
+}
+
+export interface ModuleAttributes {
+    module_id: string;
     course_id: string;
     title: string;
     description: string;
-    category: "Data" | "Engineering" | "Design" | "Business" | "Other";
-    level?: "Beginner" | "Intermediate" | "Advanced";
+    order: number;
 }
