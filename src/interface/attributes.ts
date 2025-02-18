@@ -43,7 +43,7 @@ export interface CourseAttributes {
 }
 
 export interface LessonAttributes {
-    lesson_id: string;
+    lesson_id?: string;
     module_id: string;
     title: string;
     content: string;
