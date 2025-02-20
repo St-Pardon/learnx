@@ -4,8 +4,14 @@ import Module from '../../models/module.model';
 import { ModuleAttributes } from '../../interface/attributes';
 
 class ModuleController {
-    // get modules
-    static async get(res: Response, req: Request) {
+    /**
+     * Get all lessons
+     * @param {Request} req - request object
+     * @param {Response} res - response object
+     * @returns {Promise<void>} - response object
+     * @memberof ModuleController
+     */
+    static async get(res: Response, req: Request): Promise<void> {
         try {
             const modules = await Module.findAll({
                 include: [
@@ -25,8 +31,14 @@ class ModuleController {
         }
     }
 
-    // get module by id
-    static async getById(res: Response, req: Request) {
+    /**
+     * Get lessons by id
+     * @param {Request} req - request object
+     * @param {Response} res - response object
+     * @returns {Promise<void>} - response object
+     * @memberof LessonController
+     */
+    static async getById(res: Response, req: Request): Promise<void> {
         try {
             const { module_id } = req.params;
 
@@ -54,7 +66,14 @@ class ModuleController {
             });
         }
     }
-    // create module
+
+    /**
+     * Create a new lesson
+     * @param {Request} req - request object
+     * @param {Response} res - response object
+     * @returns {Promise<void>} - response object
+     * @memberof LessonController
+     */
     static async create(res: Response, req: Request) {
         try {
             const { course_id, title, description, order } = req.body;
@@ -87,7 +106,14 @@ class ModuleController {
             });
         }
     }
-    // update module
+
+    /**
+     * Update a module
+     * @param {Request} req - request object
+     * @param {Response} res - response object
+     * @returns {Promise<void>} - response object
+     * @memberof ModuleController
+     */
     static async update(res: Response, req: Request) {
         try {
             const { module_id } = req.params;
@@ -121,7 +147,14 @@ class ModuleController {
             });
         }
     }
-    // delete module
+
+    /**
+     * Delete a module
+     * @param {Request} req - request object
+     * @param {Response} res - response object
+     * @returns {Promise<void>} - response object
+     * @memberof ModuleController
+     */
     static async delete(res: Response, req: Request) {
         try {
             const { module_id } = req.params;
