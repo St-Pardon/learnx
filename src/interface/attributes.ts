@@ -52,7 +52,7 @@ export interface LessonAttributes {
 }
 
 export interface ModuleAttributes {
-    module_id: string;
+    module_id?: string;
     course_id: string;
     title: string;
     description: string;
