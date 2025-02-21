@@ -58,3 +58,13 @@ export interface ModuleAttributes {
     description: string;
     order: number;
 }
+
+
+export interface EnrollmentAttributes {
+    enrollment_id: string;
+    course_id: string;
+    user_id: string;
+    enrolled_on?: Date;
+    completed_on?: Date;
+    completion_status?: 'Enrolled' | 'Completed' | 'Dropped';
+}
