@@ -12,3 +12,8 @@ export const DB_NAME: string = process.env.DB_NAME || 'learnx';
 
 // JWT Config
 export const JWT_SECRET: string = process.env.JWT_SECRET || 'default'
+
+// Email Config
+export const EMAIL_USER: string = process.env.EMAIL_USER || ''
+export const EMAIL_PASS: string = process.env.EMAIL_PASS || '';
+export const EMAIL_SERVICE: string = process.env.EMAIL_SERVICE || 'Gmail';
