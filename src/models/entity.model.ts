@@ -78,6 +78,7 @@ class User extends Model<UserAttributes> implements UserAttributes {
 
     public static associate(models: any) {
         User.hasOne(models.UserInfo, { foreignKey: 'user_id', as: 'userinfo' });
+        User.hasMany(models.Course, { foreignKey: 'created_by', as: 'createdCourses' });
     }
 
     public async comparePassword(password: string) {
