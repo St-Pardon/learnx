@@ -2,9 +2,14 @@ import passport from 'passport';
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as localStategy } from 'passport-local';
 import { User, UserInfo } from '../../models/entity.model';
-import { ITokenPayload, IUser, UserAttributes } from '../../interface/attributes';
+import {
+    ITokenPayload,
+    IUser,
+    UserAttributes,
+} from '../../interface/attributes';
 import { JWT_SECRET } from '../../config/env.config';
 import { Op } from 'sequelize';
+import { sendVerificationEmail } from '../../utils/verification.utils';
 
 passport
     .use(
@@ -44,7 +49,7 @@ passport
                 done: (error: any, user?: IUser | false, info?: any) => void
             ) => {
                 try {
-                    const {firstname, lastname, username} = req.body;
+                    const { firstname, lastname, username } = req.body;
 
                     if (!email || !password || !username) {
                         return done(null, false, {
@@ -53,8 +58,8 @@ passport
                     }
                     const checkUser = await User.findOne({
                         where: {
-                            [Op.or]: [{ email }, { username }]
-                        }
+                            [Op.or]: [{ email }, { username }],
+                        },
                     }); // check if user already exists
 
                     if (checkUser) {
@@ -72,10 +77,15 @@ passport
                     });
 
                     const userId = user.user_id;
-                    await UserInfo.create({ // create user info
+                    await UserInfo.create({
+                        // create user info
                         user_id: userId,
                     });
 
+                    // send email verification
+                    await sendVerificationEmail(user);
+
+                    console.log('reached 2');
                     return done(null, user, {
                         message: 'User created successfully',
                     });

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../config/env.config';
+import { User } from '../../models/entity.model';
 
 class AuthController {
     /**
@@ -20,6 +21,7 @@ class AuthController {
             'signup',
             async (err: any, user: any, msg: any) => {
                 if (err) {
+                    console.log('first');
                     res.status(400).json({
                         message: 'An Error occurred',
                         reason: msg.message,
@@ -28,6 +30,7 @@ class AuthController {
                     return;
                 }
                 if (!user) {
+                    console.log('second');
                     res.status(400).json({
                         message: 'An Error occurred',
                         reason: msg.message,
@@ -68,11 +71,11 @@ class AuthController {
                     req.login(user, { session: false }, async (error) => {
                         if (error) return next(error);
 
-                        const body = { userid: user.userid, email: user.email };
-                        const token = jwt.sign({ user: body }, JWT_SECRET);
+                        const body = { userid: user.user_id, email: user.email };
+                        const access_token = jwt.sign({ user: body }, JWT_SECRET);
                         res.status(200).json({
                             message: 'Login successful',
-                            token,
+                            access_token,
                         });
                     });
                 } catch (error) {
@@ -80,6 +83,37 @@ class AuthController {
                 }
             }
         )(req, res, next);
+    }
+
+    /**
+     * verify user email
+     * @param {Request} req - request object
+     * @param {Response} res - response object
+     * @returns {Promise<void>} - response object
+     * @memberof AuthController
+     */
+    static async verify(req: Request, res: Response): Promise<void> {
+        try {
+            const { token } = req.query;
+            if (typeof token !== 'string') {
+                res.status(400).json({ message: 'Invalid token format' });
+                return;
+            }
+            const decoded: any = jwt.verify(token, JWT_SECRET);
+    
+            const user = await User.findByPk(decoded.userId);
+            if (!user) {
+                res.status(400).json({ message: 'Invalid verification link' });
+                return 
+            }
+    
+            user.isVerified = true;
+            await user.save();
+    
+            res.json({ message: 'Email verified successfully' });
+        } catch (error) {
+            res.status(400).json({ message: 'Invalid or expired token' });
+        }
     }
 }
 
