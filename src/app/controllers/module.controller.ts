@@ -74,7 +74,7 @@ class ModuleController {
      * @returns {Promise<void>} - response object
      * @memberof LessonController
      */
-    static async create(res: Response, req: Request) {
+    static async create(res: Response, req: Request): Promise<void> {
         try {
             const { course_id, title, description, order } = req.body;
             const data = {} as ModuleAttributes;
@@ -114,7 +114,7 @@ class ModuleController {
      * @returns {Promise<void>} - response object
      * @memberof ModuleController
      */
-    static async update(res: Response, req: Request) {
+    static async update(res: Response, req: Request): Promise<void> {
         try {
             const { module_id } = req.params;
             const { title, description, order } = req.body;
@@ -155,7 +155,7 @@ class ModuleController {
      * @returns {Promise<void>} - response object
      * @memberof ModuleController
      */
-    static async delete(res: Response, req: Request) {
+    static async delete(res: Response, req: Request): Promise<void> {
         try {
             const { module_id } = req.params;
 

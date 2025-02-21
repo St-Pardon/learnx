@@ -70,7 +70,7 @@ export class UserController {
                         model: UserInfo,
                         as: 'userinfo',
                         attributes: {
-                            exclude: ['created_at', 'updated_at', 'userid'],
+                            exclude: ['created_at', 'updated_at', 'user_id'],
                         },
                     },
                 ],

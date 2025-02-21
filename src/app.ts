@@ -5,7 +5,8 @@ import './app/middlewares/auth.middleware';
 
 const app = express();
 
-app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+    .use(express.json())
     .use(helmet())
     .use('/', indexRoute);
 
