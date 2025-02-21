@@ -62,6 +62,8 @@ class User extends Model<UserAttributes> implements UserAttributes {
             {
                 sequelize,
                 modelName: 'User',
+                tableName: 'users',
+                timestamps: true,
             }
         );
         // hash the password before saving the user
@@ -118,6 +120,8 @@ class UserInfo extends Model<UserInfoAttributes> implements UserInfoAttributes {
             {
                 sequelize,
                 modelName: 'UserInfo',
+                tableName: 'userInfo',
+                timestamps: true,
             }
         );
 
