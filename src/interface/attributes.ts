@@ -5,7 +5,7 @@ export interface UserAttributes {
     username?: string;
     email: string;
     password: string;
-    role?: "Learner" | "Instructor" | "Admin";
+    role?: 'Learner' | 'Instructor' | 'Admin';
     isVerified?: boolean;
     isActive?: boolean;
     userinfo?: UserInfoAttributes;
@@ -33,13 +33,13 @@ export interface ITokenPayload {
     user: IUser;
 }
 
-
 export interface CourseAttributes {
     course_id?: string;
     title: string;
     description?: string;
-    category: "Data" | "Engineering" | "Design" | "Business" | "Other";
-    level?: "Beginner" | "Intermediate" | "Advanced";
+    category: 'Data' | 'Engineering' | 'Design' | 'Business' | 'Other';
+    level?: 'Beginner' | 'Intermediate' | 'Advanced';
+    created_by: string;
 }
 
 export interface LessonAttributes {

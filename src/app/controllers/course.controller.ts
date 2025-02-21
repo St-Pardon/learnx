@@ -23,7 +23,7 @@ class CourseController {
             });
         }
     }
-   
+
     /**
      * Get course by id
      * @param {Request} req - request object
@@ -53,16 +53,20 @@ class CourseController {
      * @returns {Promise<void>} - response object
      * @memberof CourseController
      */
-    static async create(req: Request, res: Response): Promise<void> {
+    static async create(
+        req: Request & { user?: any },
+        res: Response
+    ): Promise<void> {
         try {
             const { title, description, category, level } = req.body;
+            const user_id = req.user.userid;
             const course = {} as CourseAttributes;
 
             if (title) course['title'] = title;
             if (description) course['description'] = description;
             if (category) course['category'] = category;
             if (level) course['level'] = level;
-
+            if (user_id) course['created_by'] = user_id;
             const newCourse = new Course(course);
 
             await newCourse.save();
@@ -78,7 +82,7 @@ class CourseController {
             });
         }
     }
-    
+
     /**
      * Update course
      * @param {Request} req - request object
@@ -112,7 +116,7 @@ class CourseController {
             });
         }
     }
-    
+
     /**
      * Delete course
      * @param {Request} req - request object
