@@ -1,6 +1,4 @@
-// module_id (UUID, Primary Key)
-
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 import { ModuleAttributes } from '../interface/attributes';
 import Lesson from './lesson.model';
 import Course from './course.model';
@@ -12,7 +10,7 @@ class Module extends Model<ModuleAttributes> {
     public description!: string;
     public order!: number;
 
-    public static initialize(sequelize: any) {
+    public static initialize(sequelize: Sequelize) {
         Module.init(
             {
                 module_id: {

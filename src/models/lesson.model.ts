@@ -1,10 +1,7 @@
-// lesson_id (UUID, Primary Key)
-
 import { Model } from "sequelize";
 import { LessonAttributes } from "../interface/attributes";
 import { Sequelize, DataTypes, UUIDV4 } from "sequelize";
 import Module from "./module.model";
-// import { Quiz } from "./quiz.model";
 
 class Lesson extends Model<LessonAttributes> {
     public lesson_id!: string;
@@ -50,6 +47,7 @@ class Lesson extends Model<LessonAttributes> {
                 timestamps: true,
             }
         );
+        return Lesson;
     }
 
     public static associate() {

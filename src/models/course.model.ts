@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import { CourseAttributes } from "../interface/attributes";
+import Module from "./module.model";
 
 class Course extends Model<CourseAttributes> implements CourseAttributes {
     public course_id!: string;
@@ -35,13 +36,20 @@ class Course extends Model<CourseAttributes> implements CourseAttributes {
             },
             {
                 sequelize,
-                tableName: 'lessons',
+                modelName: 'Course',
+                tableName: 'courses',
+                timestamps: true,
             }
         );
         return Course;
     }
     
-        
+    public static associate() {
+        Course.hasMany(Module, {
+            foreignKey: 'course_id',
+            as: 'courses',
+        });
+    } 
 }
 
 
