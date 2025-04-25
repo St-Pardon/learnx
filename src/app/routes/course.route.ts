@@ -10,7 +10,7 @@ CourseRoute.post(
     CourseController.create
 )
     .get('/', CourseController.getAll)
-    .get('course_id', CourseController.getById)
+    .get('/:course_id?', CourseController.getById)
     .patch(
         '/:course_id',
         passport.authenticate('jwt', { session: false }),

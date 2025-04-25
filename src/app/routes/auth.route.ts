@@ -6,6 +6,9 @@ const AuthRoute = Router();
 
 AuthRoute.post('/signup', AuthController.signup)
     .post('/login', AuthController.login)
-    .patch('/verify', AuthController.verify);
+    .patch('/verify', AuthController.verify)
+    .patch('/reset-password', AuthController.reset)
+    .patch('/update-password', AuthController.changePassword)
+    .post('/forgot-password', AuthController.forgotPassword);
 
 export default AuthRoute;
