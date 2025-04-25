@@ -28,6 +28,11 @@ UserRoute.get(
         '/deactivate/:id?',
         passport.authenticate('jwt', { session: false }),
         UserController.deactivate
+    )
+    .patch(
+        '/reactivate/:id?',
+        passport.authenticate('jwt', { session: false }),
+        UserController.reactivate
     );
 
 export default UserRoute;
