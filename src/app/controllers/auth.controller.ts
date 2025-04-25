@@ -21,7 +21,6 @@ class AuthController {
             'signup',
             async (err: any, user: any, msg: any) => {
                 if (err) {
-                    console.log('first');
                     res.status(400).json({
                         message: 'An Error occurred',
                         reason: msg.message,
@@ -30,7 +29,6 @@ class AuthController {
                     return;
                 }
                 if (!user) {
-                    console.log('second');
                     res.status(400).json({
                         message: 'An Error occurred',
                         reason: msg.message,
@@ -100,13 +98,27 @@ class AuthController {
                 return;
             }
             const decoded: any = jwt.verify(token, JWT_SECRET);
-    
-            const user = await User.findByPk(decoded.userId);
+
+            // check if token is expired 
+            if (decoded.exp < Date.now()) {
+                res.status(400).json({ message: 'Token expired' });
+                return;
+            }
+
+            const userId = decoded.userId;
+            const user = await User.findByPk(userId);
+            
             if (!user) {
                 res.status(400).json({ message: 'Invalid verification link' });
                 return 
             }
-    
+            
+            // check if user is already verified
+            if (user.isVerified) {
+                res.status(400).json({ message: 'Account already verified' });
+                return;
+                
+            }
             user.isVerified = true;
             await user.save();
     

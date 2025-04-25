@@ -85,7 +85,6 @@ passport
                     // send email verification
                     await sendVerificationEmail(user);
 
-                    console.log('reached 2');
                     return done(null, user, {
                         message: 'User created successfully',
                     });

@@ -37,7 +37,7 @@ export class UserController {
             await UserInfo.update(userInfo, { where: { user_id } });
             await User.update(user, { where: { user_id } });
 
-            res.status(201).json({ message: 'User updated successfully' });
+            res.status(204).json({ message: 'User updated successfully' });
         } catch (error: any) {
             res.status(500).send({
                 message:
@@ -148,7 +148,7 @@ export class UserController {
                         model: UserInfo,
                         as: 'userinfo',
                         attributes: {
-                            exclude: ['created_at', 'updated_at', 'userid'],
+                            exclude: ['created_at', 'updated_at', 'user_id'],
                         },
                     },
                 ],
@@ -188,6 +188,35 @@ export class UserController {
                 message:
                     error.message ||
                     'Some error occurred while deactivating the User.',
+            });
+        }
+    }
+
+    /**
+     * reactivate user endpoint
+     * @param {Request} req - request object
+     * @param {Response} res - response object
+     * @returns {Promise<void>} - response object
+     */
+    static async reactivate(
+        req: Request & { user?: any },
+        res: Response
+    ): Promise<void> {
+        try {
+            const { id } = req.params;
+            const user_id = id ? id : req.user.userid; // get user id from params or token
+
+            await User.update({ isActive: true }, { where: { user_id } });
+
+            res.status(200).send({
+                message: 'User reactivated successfully!',
+            });
+        }
+        catch (error: any) {
+            res.status(500).send({
+                message:
+                    error.message ||
+                    'Some error occurred while reactivating the User.',
             });
         }
     }
