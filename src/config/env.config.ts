@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const PORT: string = process.env.PORT || '5000';
+export const BASE_URI: string = process.env.BASE_URL || 'http://localhost:5000';
 // export const ENV: string = process.env.ENV || 'dev';
 
 // Database Config

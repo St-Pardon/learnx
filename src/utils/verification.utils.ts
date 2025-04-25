@@ -1,21 +1,12 @@
-import nodemailer from 'nodemailer';
 import { generateVerificationToken } from './token.utils';
-import { User } from '../models/entity.model';
-import { EMAIL_PASS, EMAIL_SERVICE, EMAIL_USER } from '../config/env.config';
 import { UserAttributes } from '../interface/attributes';
-
-const transporter = nodemailer.createTransport({
-    service: EMAIL_SERVICE,
-    auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASS,
-    },
-});
+import transporter from '../config/nodemailer.config';
+import { BASE_URI } from '../config/env.config';
 
 export const sendVerificationEmail = async (user: UserAttributes) => {
     const token = generateVerificationToken(user);
     try{
-        const verificationLink = `http://localhost:5000/auth/verify?token=${token}`;
+        const verificationLink = `${BASE_URI}/auth/verify?token=${token}`;
         console.log(verificationLink)
         
         const mailOptions = {
@@ -30,3 +21,22 @@ export const sendVerificationEmail = async (user: UserAttributes) => {
         console.log(error)
     }
 };
+
+export const resetPasswordEmail = async (user: UserAttributes) => {
+    const token = generateVerificationToken(user);
+    try{
+        const verificationLink = `${BASE_URI}/auth/reset-password?token=${token}`;
+        console.log(verificationLink)
+        
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: user.email,
+            subject: 'Reset Your Password',
+            html: `<p>Click <a href="${verificationLink}">here</a> to reset your password.</p>`,
+        };
+        
+        await transporter.sendMail(mailOptions);
+    } catch (error) {
+        console.log(error)
+    }
+}
