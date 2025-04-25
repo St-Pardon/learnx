@@ -59,7 +59,7 @@ class CourseController {
     ): Promise<void> {
         try {
             const { title, description, category, level } = req.body;
-            const user_id = req.user.userid;
+            const user_id = req.user?.userid;
             const course = {} as CourseAttributes;
 
             if (title) course['title'] = title;
