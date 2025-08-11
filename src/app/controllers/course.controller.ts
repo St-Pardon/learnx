@@ -58,10 +58,11 @@ class CourseController {
         res: Response
     ): Promise<void> {
         try {
-            const { title, description, category, level } = req.body;
+            const { course_code,title, description, category, level, status } = req.body;
             const user_id = req.user?.userid;
             const course = {} as CourseAttributes;
 
+            
             if (title) course['title'] = title;
             if (description) course['description'] = description;
             if (category) course['category'] = category;
@@ -93,13 +94,15 @@ class CourseController {
     static async update(req: Request, res: Response): Promise<void> {
         try {
             const { course_id } = req.params;
-            const { title, description, category, level } = req.body;
+            const { course_code,title, description, category, level, status } = req.body;
             const course = {} as CourseAttributes;
 
+            if (course_code) course['course_code'] = course_code;
             if (title) course['title'] = title;
             if (description) course['description'] = description;
             if (category) course['category'] = category;
             if (level) course['level'] = level;
+            if (status) course['status'] = status;
 
             await Course.update(course, {
                 where: { course_id },

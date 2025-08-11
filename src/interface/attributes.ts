@@ -35,10 +35,12 @@ export interface ITokenPayload {
 
 export interface CourseAttributes {
     course_id?: string;
+    course_code: string;
     title: string;
     description?: string;
     category: 'Data' | 'Engineering' | 'Design' | 'Business' | 'Other';
     level?: 'Beginner' | 'Intermediate' | 'Advanced';
+    status?: 'Draft' | 'Published' | 'Archived';
     created_by: string;
 }
 

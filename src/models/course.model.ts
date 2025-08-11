@@ -5,10 +5,12 @@ import { User } from './entity.model';
 
 class Course extends Model<CourseAttributes> implements CourseAttributes {
     public course_id!: string;
+    public course_code!: string;
     public title!: string;
     public description!: string;
     public category!: 'Data' | 'Engineering' | 'Design' | 'Business' | 'Other';
     public level!: 'Beginner' | 'Intermediate' | 'Advanced';
+    public status!: 'Draft' | 'Published' | 'Archived';
     public created_by!: string;
 
     public static initialize(sequelize: any) {
@@ -18,6 +20,11 @@ class Course extends Model<CourseAttributes> implements CourseAttributes {
                     type: DataTypes.UUID,
                     defaultValue: DataTypes.UUIDV4,
                     primaryKey: true,
+                },
+                course_code: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                    unique: true,
                 },
                 title: {
                     type: DataTypes.STRING,
@@ -44,6 +51,10 @@ class Course extends Model<CourseAttributes> implements CourseAttributes {
                         'Advanced'
                     ),
                     allowNull: false,
+                },
+                status: {
+                    type: DataTypes.ENUM('Draft', 'Published', 'Archived'),
+                    defaultValue: 'Draft',
                 },
                 created_by: {
                     type: DataTypes.UUID,
